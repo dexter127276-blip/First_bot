@@ -51,3 +51,9 @@ create trigger trg_users_set_updated_at
 before update on public.users
 for each row
 execute function public.set_updated_at();
+
+grant select, insert, update on public.users to anon, authenticated, service_role;
+grant select, insert on public.requests to anon, authenticated, service_role;
+grant select, insert on public.history to anon, authenticated, service_role;
+
+grant usage, select on all sequences in schema public to anon, authenticated, service_role;
