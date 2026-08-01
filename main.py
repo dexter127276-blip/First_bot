@@ -17,8 +17,6 @@ load_dotenv()
 TG_BOT_TOKEN = os.getenv("TG_BOT_TOKEN")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-GIGACHAT_API_URL = os.getenv("GIGACHAT_API_URL")
-GIGACHAT_API_KEY = os.getenv("GIGACHAT_API_KEY")
 
 if not TG_BOT_TOKEN:
     raise RuntimeError("TG_BOT_TOKEN is not set in environment")
@@ -27,7 +25,7 @@ bot = Bot(token=TG_BOT_TOKEN)
 dp = Dispatcher()
 
 supabase = SupabaseClient(SUPABASE_URL, SUPABASE_KEY)
-gigachat = GigaChatClient(GIGACHAT_API_URL, GIGACHAT_API_KEY)
+gigachat = GigaChatClient()
 
 
 def get_sample_market_data() -> dict:
@@ -113,7 +111,7 @@ async def handle_help(message: Message) -> None:
 async def handle_market(message: Message) -> None:
     log_user(message)
     market_data = get_sample_market_data()
-    overview = gigachat.generate_market_overview(market_data)
+    overview = await gigachat.generate_market_overview(market_data)
     response = f"*Обзор рынка*\n\n{overview}"
     await message.answer(response, parse_mode="Markdown")
     log_interaction(message, overview, request_type="market")
@@ -123,7 +121,7 @@ async def handle_market(message: Message) -> None:
 async def handle_news(message: Message) -> None:
     log_user(message)
     news_items = get_sample_news()
-    summary = gigachat.summarize_news(news_items)
+    summary = await gigachat.summarize_news(news_items)
     response = f"*Свежие новости рынка*\n\n{summary}"
     await message.answer(response, parse_mode="Markdown")
     log_interaction(message, summary, request_type="news")

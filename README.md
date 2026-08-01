@@ -12,9 +12,9 @@
 
 ## Стек
 
-- Python
+- Python 3.13
 - aiogram 3.0
-- GigaChat
+- официальный Python SDK GigaChat
 - Supabase
 - python-dotenv
 
@@ -25,11 +25,14 @@
    - `TG_BOT_TOKEN`
    - `SUPABASE_URL`
    - `SUPABASE_KEY`
-   - `GIGACHAT_API_URL`
-   - `GIGACHAT_API_KEY`
+   - `GIGACHAT_CREDENTIALS`
+   - `GIGACHAT_SCOPE`
+   - `GIGACHAT_BASE_URL`
+   - `GIGACHAT_MODEL`
+   - `GIGACHAT_CA_BUNDLE_FILE`
 3. Установи зависимости:
    ```bash
-   pip install -r requirements.txt
+   python -m pip install -r requirements.txt
    ```
 4. Запусти бота:
    ```bash
@@ -43,6 +46,8 @@
 - `requests`
 - `history`
 
-Если таблицы не созданы, создай их вручную по структуре из `Agent.md`.
+Если таблицы не созданы, выполни миграцию
+`supabase/migrations/20260604203000_create_bot_tables.sql`
+в Supabase SQL Editor.
 
 
